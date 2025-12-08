@@ -1,0 +1,32 @@
+# Icinga2 Deployment
+
+networks:
+  icinga2_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.31.0.0/16
+
+services:
+
+  postgres:
+    build:
+      context: ./postgresql
+      dockerfile: Dockerfile
+    image: pg17-icinga:latest              # will be built automatically
+    container_name: icinga-postgresql
+    restart: unless-stopped
+    # Change these passwords in production!
+    environment:
+      POSTGRES_PASSWORD: postgres          # superuser password
+      # If you ever want a different default DB/user, uncomment:
+      # POSTGRES_USER: postgres
+      # POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - /var/lib/postgresql/data:/var/lib/postgresql/data
+    networks:
+      icinga2_network:
+        ipv4_address: 172.31.0.5
