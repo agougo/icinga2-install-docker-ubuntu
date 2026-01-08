@@ -8,7 +8,7 @@ LABEL org.opencontainers.image.version="2.15.1"
 
 # Environment variables (override at runtime with -e or docker-compose if needed)
 #ENV ICINGA_CN=icinga2
-#ENV ICINGA_MASTER:=1
+#ENV ICINGA_MASTER=1
 #ENV ICINGA_ACCEPT_COMMANDS=1
 #ENV ICINGA_ACCEPT_CONFIG=1
 #ENV ICINGA_DISABLE_CONFD=0
@@ -19,8 +19,7 @@ LABEL org.opencontainers.image.version="2.15.1"
 #ENV ICINGA_TICKET=0123456789
 
 # Install any additional packages you might need
-RUN apt update && apt install -y apt-transport-https dialog monitoring-plugins
-RUN icinga2 api setup && icinga2 node wizard
+RUN apt update && apt install -y apt-transport-https dialog monitoring-plugins icingacli && rm -rf /var/lib/apt/lists/*
 
 # Copy custom configuration files
 # COPY [Local File] [Remote File]

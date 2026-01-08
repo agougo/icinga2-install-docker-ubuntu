@@ -42,6 +42,8 @@ systemctl enable containerd.service
 
 docker compose up -d
 
+docker exec -it icinga2-core icingacli setup token show
+
 # Add DNS entry
 #IP=$(hostname -I)
 #echo $IP $HOSTNAME >> /etc/hosts
