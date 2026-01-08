@@ -8,17 +8,17 @@ networks:
       config:
         - subnet: 172.31.0.0/16
 
-x-icinga2-environment:
-  &icinga2-environment
-  ICINGA_CN: icinga2
-  ICINGA_MASTER: 1
-  ICINGA_ACCEPT_COMMANDS: 1
-  ICINGA_ACCEPT_CONFIG: 1
-  ICINGA_DISABLE_CONFD: 0
-  ICINGA_ENDPOINT: icinga2,172.31.0.2,5665
-  ICINGA_GLOBAL_ZONES: global-config
-  ICINGA_LISTEN: 5665
-  ICINGA_ZONE: master
+#x-icinga2-environment:
+#  &icinga2-environment
+#  ICINGA_CN: icinga2
+#  ICINGA_MASTER: 1
+#  ICINGA_ACCEPT_COMMANDS: 1
+#  ICINGA_ACCEPT_CONFIG: 1
+#  ICINGA_DISABLE_CONFD: 0
+#  ICINGA_ENDPOINT: icinga2,172.31.0.2,5665
+#  ICINGA_GLOBAL_ZONES: global-config
+#  ICINGA_LISTEN: 5665
+#  ICINGA_ZONE: master
 
 services:
 
