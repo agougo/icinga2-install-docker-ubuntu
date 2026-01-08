@@ -8,20 +8,13 @@ networks:
       config:
         - subnet: 172.31.0.0/16
 
-volumes:
-  icinga2-config:
-  icinga2-data:
-  icinga2-logs:
-  icinga2-cache:
-  icinga2-spool:
-
 services:
 
   icinga2:
     build:
       context: ./icinga2
       dockerfile: Dockerfile
-    image: icinga/icinga2:2.15.1
+    image: core-icinga2:latest
     container_name: icinga2-core
     restart: unless-stopped
     environment:
@@ -53,7 +46,7 @@ services:
     build:
       context: ./postgresql
       dockerfile: Dockerfile
-    image: pg17-icinga:latest              # will be built automatically
+    image: pg17-icinga2:latest              # will be built automatically
     container_name: icinga2-postgresql
     restart: unless-stopped
     # Change these passwords in production!
