@@ -24,8 +24,8 @@ COPY pg_hba.conf /etc/postgresql/pg_hba.conf
 
 # Copy initialization scripts (SQL + shell scripts in /docker-entrypoint-initdb.d/)
 # They will be executed automatically on first container start
-COPY init-icinga.sh /docker-entrypoint-initdb.d/01-init-icinga.sh
-RUN chmod +x /docker-entrypoint-initdb.d/01-init-icinga.sh
+COPY init-icinga2-postgresql.sh /docker-entrypoint-initdb.d/init-icinga2-postgresql.sh
+RUN chmod +x /docker-entrypoint-initdb.d/init-icinga2-postgresql.sh
 
 # Expose the standard PostgreSQL port
 EXPOSE 5432

@@ -8,14 +8,43 @@ networks:
       config:
         - subnet: 172.31.0.0/16
 
+x-icinga2-environment:
+  &icinga2-environment
+  ICINGA_CN: icinga2
+  ICINGA_MASTER: 1
+  ICINGA_ACCEPT_COMMANDS: 1
+  ICINGA_ACCEPT_CONFIG: 1
+  ICINGA_DISABLE_CONFD: 0
+  ICINGA_ENDPOINT: icinga2,172.31.0.2,5665
+  ICINGA_GLOBAL_ZONES: global-config
+  ICINGA_LISTEN: 5665
+  ICINGA_ZONE: master
+
 services:
+
+  icinga2:
+    build:
+      context: ./icinga2
+      dockerfile: Dockerfile
+    image: icinga/icinga2:2.15.1
+    container_name: icinga2-core
+    restart: unless-stopped
+    environment: *icinga2-environment
+    ports:
+      - "5665:5665"
+    volumes:
+      - /etc/icinga2:/data/etc/icinga2
+      - /var/lib/icinga2:/data/var/lib/icinga2
+    networks:
+      icinga2_network:
+        ipv4_address: 172.31.0.2
 
   postgres:
     build:
       context: ./postgresql
       dockerfile: Dockerfile
     image: pg17-icinga:latest              # will be built automatically
-    container_name: icinga-postgresql
+    container_name: icinga2-postgresql
     restart: unless-stopped
     # Change these passwords in production!
     environment:

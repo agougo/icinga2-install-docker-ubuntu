@@ -1,5 +1,7 @@
 #!/bin/bash
-set -e
+
+set -euo pipefail
+trap 'echo "Error on line $LINENO: $BASH_COMMAND" >&2' ERR
 
 echo "=========================================="
 echo "Starting Icinga PostgreSQL initialization"
