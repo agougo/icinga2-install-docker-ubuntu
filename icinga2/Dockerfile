@@ -15,7 +15,7 @@ LABEL org.opencontainers.image.version="2.15.1"
 # Copy initialization scripts
 # They will be executed automatically on first container start
 COPY init-icinga2.sh /root/init-icinga2.sh
-RUN hostname icinga2 && chmod +x /root/init-icinga2.sh && /root/init-icinga2.sh
+RUN chmod +x /root/init-icinga2.sh && /root/init-icinga2.sh
 
 # Additional commands you may need
 #

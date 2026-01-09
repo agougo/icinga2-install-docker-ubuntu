@@ -5,9 +5,8 @@ trap 'echo "Error on line $LINENO: $BASH_COMMAND" >&2' ERR
 
 cd ~
 
-# Set hostname
-hostname icinga2
-echo "icinga2" > /etc/hostname
+# Get the hostname (will be 'icinga2' at runtime from docker-compose)
+HOSTNAME=$(hostname)
 
 # Install pre-requisites
 apt update
@@ -34,11 +33,11 @@ icinga2 api setup
 
 # Configure zones
 cat > /etc/icinga2/zones.conf <<EOF
-object Endpoint "icinga2" {
+object Endpoint "$HOSTNAME" {
 }
 
 object Zone "master" {
-  endpoints = [ "icinga2" ]
+  endpoints = [ "$HOSTNAME" ]
 }
 
 object Zone "global-templates" {
