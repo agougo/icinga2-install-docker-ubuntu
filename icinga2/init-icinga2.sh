@@ -5,6 +5,10 @@ trap 'echo "Error on line $LINENO: $BASH_COMMAND" >&2' ERR
 
 cd ~
 
+# Set hostname
+hostname icinga2
+echo "icinga2" > /etc/hostname
+
 # Install pre-requisites
 apt update
 apt install -y apt-transport-https wget
