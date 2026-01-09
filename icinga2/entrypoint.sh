@@ -51,3 +51,5 @@ EOF
 
     touch /var/lib/icinga2/.initialized
 fi
+
+exec icinga2 daemon --log-level information

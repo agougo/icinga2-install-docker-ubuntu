@@ -22,6 +22,3 @@ EXPOSE 5665
 
 # Setup the API and configure as MASTER
 ENTRYPOINT ["/root/entrypoint.sh"]
-
-# Default start with log level
-CMD ["icinga2", "daemon", "--log-level", "information"]
