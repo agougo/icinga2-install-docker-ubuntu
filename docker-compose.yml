@@ -16,28 +16,16 @@ services:
       dockerfile: Dockerfile
     image: core-icinga2:latest
     container_name: icinga2-core
+    hostname: icinga2
     restart: unless-stopped
-    environment:
-      - ICINGA_FEATURE_API=true
-      - ICINGA_MASTER=1
-      - ICINGA_CN=icinga2
-      - ICINGA_ZONE=master
-      - ICINGA_PARENT_ZONE=master
-      - ICINGA_ACCEPT_CONFIG=1
-      - ICINGA_ACCEPT_COMMANDS=1
-      - ICINGA_DISABLE_CONFD=0
-      - ICINGA_GLOBAL_ZONES=global-config
-      - ICINGA_LISTEN=::,5665
-      - ICINGA_FEATURE_API=true
-      - ICINGA_API_USERS=root:icinga,admin:admin
     ports:
       - "5665:5665"
     volumes:
-      - icinga2-config:/data/etc/icinga2
-      - icinga2-data:/data/var/lib/icinga2
-      - icinga2-logs:/data/var/log/icinga2
-      - icinga2-cache:/data/var/cache/icinga2
-      - icinga2-spool:/data/var/spool/icinga2
+      - /etc/icinga2:/etc/icinga2
+      - /var/lib/icinga2:/var/lib/icinga2
+      - /var/log/icinga2:/var/log/icinga2
+      - /var/cache/icinga2:/var/cache/icinga2
+      - /var/spool/icinga2:/var/spool/icinga2
     networks:
       icinga2_network:
         ipv4_address: 172.31.0.2
