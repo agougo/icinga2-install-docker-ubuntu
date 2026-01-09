@@ -21,11 +21,11 @@ services:
     ports:
       - "5665:5665"
     volumes:
-      - /etc/icinga2:/etc/icinga2
-      - /var/lib/icinga2:/var/lib/icinga2
-      - /var/log/icinga2:/var/log/icinga2
-      - /var/cache/icinga2:/var/cache/icinga2
-      - /var/spool/icinga2:/var/spool/icinga2
+      - icinga2-etc:/etc/icinga2
+      - icinga2-lib:/var/lib/icinga2
+      - icinga2-log:/var/log/icinga2
+      - icinga2-cache:/var/cache/icinga2
+      - icinga2-spool:/var/spool/icinga2
     networks:
       icinga2_network:
         ipv4_address: 172.31.0.2
@@ -50,3 +50,10 @@ services:
     networks:
       icinga2_network:
         ipv4_address: 172.31.0.5
+
+volumes:
+  icinga2-etc:
+  icinga2-lib:
+  icinga2-log:
+  icinga2-cache:
+  icinga2-spool:

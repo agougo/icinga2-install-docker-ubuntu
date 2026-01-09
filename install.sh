@@ -40,9 +40,13 @@ systemctl enable containerd.service
 
 # Add stuff here
 
-docker compose up -d
+# Create Directories
+groupadd -g 5665 nagios
+useradd -u 5665 -g nagios -s /bin/false nagios
+mkdir -p /etc/icinga2
+chown -R nagios:nagios /etc/icinga2
 
-docker exec -it icinga2-core icingacli setup token show
+docker compose up -d
 
 # Add DNS entry
 #IP=$(hostname -I)

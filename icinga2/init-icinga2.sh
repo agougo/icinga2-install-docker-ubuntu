@@ -5,9 +5,6 @@ trap 'echo "Error on line $LINENO: $BASH_COMMAND" >&2' ERR
 
 cd ~
 
-# Get the hostname (will be 'icinga2' at runtime from docker-compose)
-HOSTNAME=$(hostname)
-
 # Install pre-requisites
 apt update
 apt install -y apt-transport-https wget
@@ -22,61 +19,7 @@ apt update
 # Install Icinga2
 apt install -y dialog icinga2 monitoring-plugins
 
-# Icinga2 Master Setup Script
-
-# Create required directories
-mkdir -p /run/icinga2
-chown nagios:nagios /run/icinga2
-
-# Setup API
-icinga2 api setup
-
-# Configure zones
-cat > /etc/icinga2/zones.conf <<EOF
-object Endpoint "$HOSTNAME" {
-}
-
-object Zone "master" {
-  endpoints = [ "$HOSTNAME" ]
-}
-
-object Zone "global-templates" {
-  global = true
-}
-
-object Zone "director-global" {
-  global = true
-}
-EOF
-
-# Configure API
-cat > /etc/icinga2/features-available/api.conf <<EOF
-object ApiListener "api" {
-  accept_commands = true
-  accept_config = true
-}
-EOF
-
-# Setup a bunch of API Users
-echo -e "\n" >> /etc/icinga2/conf.d/api-users.conf
-echo "object ApiUser \"icingaweb2\" {" >> /etc/icinga2/conf.d/api-users.conf
-echo "  password = \"icingaweb2\" " >> /etc/icinga2/conf.d/api-users.conf
-echo "  permissions = [ \"status/query\", \"actions/*\", \"objects/modify/*\", \"objects/query/*\" ]" >> /etc/icinga2/conf.d/api-users.conf
-echo "}" >> /etc/icinga2/conf.d/api-users.conf
-
-echo -e "\n" >> /etc/icinga2/conf.d/api-users.conf
-echo "object ApiUser \"admin\" {" >> /etc/icinga2/conf.d/api-users.conf
-echo "  password = \"admin\" " >> /etc/icinga2/conf.d/api-users.conf
-echo "  permissions = [ \"*\" ]" >> /etc/icinga2/conf.d/api-users.conf
-echo "}" >> /etc/icinga2/conf.d/api-users.conf
-
-# Stop the service
-#pkill icinga2
-#icinga2 daemon --log-level information
-
-# Create Directories
-mkdir -p /etc/icinga2 /var/lib/icinga2 /var/log/icinga2 /var/cache/icinga2 /var/spool/icinga2
-chown -R nagios:nagios /etc/icinga2 /var/lib/icinga2 /var/log/icinga2 /var/cache/icinga2 /var/spool/icinga2
+apt clean && rm -rf /var/lib/apt/lists/*
 
 # Features enable
 #icinga2 feature enable icingadb
