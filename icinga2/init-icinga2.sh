@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Defensive Programming
 set -euo pipefail
 trap 'echo "Error on line $LINENO: $BASH_COMMAND" >&2' ERR
 
@@ -19,6 +20,7 @@ apt update
 # Install Icinga2
 apt install -y dialog icinga2 monitoring-plugins
 
+# Cleanup
 apt clean && rm -rf /var/lib/apt/lists/*
 
 # Features enable

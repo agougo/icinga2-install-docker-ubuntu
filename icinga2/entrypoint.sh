@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Defensive Programming
 set -euo pipefail
 trap 'echo "Error on line $LINENO: $BASH_COMMAND" >&2' ERR
 
